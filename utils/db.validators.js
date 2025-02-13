@@ -1,6 +1,7 @@
 import User from '../src/user/user.model.js'
 import Category from '../src/categories/categories.model.js'
 import parsePhoneNumber from "libphonenumber-js";
+import { isValidObjectId } from 'mongoose';
 
 export const existEmail = async(email, user)=> {
     const alreadyEmail = await User.findOne({email})
@@ -26,6 +27,9 @@ export const existCategory = async(name, category)=> {
     }
 }
 
+export const objectIdValid = async(objectid)=>{
+    if(!isValidObjectId(objectid)) throw new Error(`Parent category is not valid ObjectId`)
+}
 
 export const comonPasswords = async(password)=> {
     const comonPasswords = ['Password1234', 'Test1234', 'Prueba1234', 'Hola1234', 'Client1234', 'Admin1234', '12345678', 'asdfghjk', 'testtest']

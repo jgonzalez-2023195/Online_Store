@@ -41,6 +41,10 @@ const userSchema = Schema(
         profilePicture: {
             type: String
         }
+    },
+    {
+        versionKey: false,
+        timestamps: true
     }
 )
 

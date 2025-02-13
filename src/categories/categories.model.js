@@ -23,6 +23,10 @@ const categorySchema= Schema(
             ref: 'Category',
             default: null
         }
+    },
+    {
+        versionKey: false,
+        timestamps: true
     }
 )
 

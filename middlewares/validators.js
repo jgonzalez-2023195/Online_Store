@@ -1,6 +1,6 @@
 import { body } from "express-validator"
 import { validateErros } from './validate.errors.js'
-import { comonPasswords, existCategory, existEmail, existUserName, formatPhoneNumber } from "../utils/db.validators.js"
+import { comonPasswords, existCategory, existEmail, existUserName, formatPhoneNumber, objectIdValid } from "../utils/db.validators.js"
 
 export const registerUser = [
     body('name', 'Name cannot be empty')
@@ -43,6 +43,37 @@ export const registerUser = [
 export const registerCategory = [
     body('name', 'Name cannot be empty')
         .notEmpty()
+        .isLength({ min: 4 }).withMessage(`The Name must be at least 4 characters long`)
         .custom(existCategory),
+    body('description', 'Description cannot be empty')
+        .optional()
+        .notEmpty()
+        .isLength({ min: 5 }).withMessage(`The Description must be at least 5 characters long`),
+    body('status', 'Status cannot be empty')
+        .optional()
+        .notEmpty()
+        .isIn(['ACTIVE', 'INACTIVE']).withMessage(`Status must be 'ACTIVE' or 'INACTIVE'`),
+    body('parentCategory', 'Parent category cannot be empty')
+        .optional()
+        .notEmpty()
+        .custom(objectIdValid),
+    validateErros
+]
+
+export const updatedCategory = [
+    body('name', 'Name cannot be empty')
+        .notEmpty()
+        .custom((name, { req })=> existCategory(name, req.category)),
+    body('description', 'Description cannot be empty')
+        .optional()
+        .notEmpty(),
+    body('status', 'Status cannot be empty')
+        .optional()
+        .notEmpty()
+        .isIn(['ACTIVE', 'INACTIVE']).withMessage(`Status must be 'ACTIVE' or 'INACTIVE'`),
+    body('parentCategory', 'Parent category cannot be empty')
+        .optional()
+        .notEmpty()
+        .custom(objectIdValid),
     validateErros
 ]
