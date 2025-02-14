@@ -56,3 +56,43 @@ export const listProduct = async(req, res)=> {
         )
     }
 }
+
+export const updatedProduct = async(req, res)=> {
+    try {
+        const { id } = req.params
+        const { filename } = req.file
+        const data = req.body
+
+        if (filename) {
+            data.productPicture = filename;
+        }
+
+        const product = await Product.findByIdAndUpdate(
+            id,
+            data,
+            {new: true}
+        )
+        if(!product) return res.status(404).send(
+            {
+                success: false,
+                message: 'Product not foun, product not update'
+            }
+        )
+        return res.status(200).send(
+            {
+                succes: true,
+                message: 'Produc updated: ',
+                product
+            }
+        )
+    } catch (e) {
+        console.error(e);
+        return res.status(500).send(
+            {
+                succes: false,
+                message: 'General error when updated product',
+                e
+            }
+        )
+    }
+}

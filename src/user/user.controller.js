@@ -3,15 +3,12 @@ import User from './user.model.js'
 export const update = async(req, res)=>{
     try{
         const { id } = req.params
- 
         const data = req.body
- 
         const update = await User.findByIdAndUpdate(
             id,
             data,
             {new: true}
         )
- 
         if(!update) return res.status(404).send(
             {
                 success: false,

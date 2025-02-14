@@ -107,8 +107,42 @@ export const registerProduct = [
     body('category', 'Category cannot be empty')
         .notEmpty()
         .custom(objectIdValid),
-    body('status', 'Status cannot be empty') // Corrección de typo
-        .optional() // Si es opcional, no se debe llamar a notEmpty()
+    body('status', 'Status cannot be empty') 
+        .optional() 
         .isIn(['AVAILABLE']).withMessage(`Status must be 'AVAILABLE'`),
-    validateErros // Asegúrate de que esta función esté definida
+    validateErros 
+]
+
+export const updateProduct = [
+    body('name', 'Name cannot be empty')
+        .optional()
+        .notEmpty(),
+        // .custom(), añadir unique ture a name
+    body('description', 'Description cannot be empty')
+        .optional()
+        .notEmpty(),
+    body('brand', 'Brand cannot be empty') 
+        .optional()
+        .notEmpty(),
+    body('SKU', 'SKU cannot be empty')
+        .optional()
+        .notEmpty(),
+    body('price', 'Price cannot be empty')
+        .optional()
+        .notEmpty()
+        .isDecimal().withMessage('Price not valid')
+        .custom(formatPrice),
+    body('stock', 'Stock cannot be empty')
+        .optional()
+        .notEmpty()
+        .isInt({ min: 0 }),
+    body('category', 'Category cannot be empty')
+        .optional()
+        .notEmpty()
+        .custom(objectIdValid),
+    body('status', 'Status cannot be empty')
+        .optional() 
+        .optional() 
+        .isIn(['AVAILABLE']).withMessage(`Status must be 'AVAILABLE'`),
+    validateErros 
 ]
