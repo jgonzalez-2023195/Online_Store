@@ -1,7 +1,7 @@
 import User from '../src/user/user.model.js'
 import Category from '../src/categories/categories.model.js'
 import parsePhoneNumber from "libphonenumber-js";
-import { isValidObjectId } from 'mongoose';
+import mongoose, { isValidObjectId } from 'mongoose';
 
 export const existEmail = async(email, user)=> {
     const alreadyEmail = await User.findOne({email})
@@ -27,8 +27,10 @@ export const existCategory = async(name, category)=> {
     }
 }
 
+
+//Otras validaciones para la bd
 export const objectIdValid = async(objectid)=>{
-    if(!isValidObjectId(objectid)) throw new Error(`Parent category is not valid ObjectId`)
+    if(!isValidObjectId(objectid)) throw new Error(`Is not valid ObjectId`)
 }
 
 export const comonPasswords = async(password)=> {
@@ -45,4 +47,14 @@ export const formatPhoneNumber = (number) => {
         throw new Error("Invalid Guatemalan phone number.")
     }
     return phoneNumber.formatInternational()
-};
+}
+
+// Validador para formato de precio
+export const formatPrice = (value) => {
+    const formatprice = parseFloat(value);
+    if (isNaN(formatprice) || formatprice < 0) {
+        throw new Error('Price must be a valid positive number');
+    }
+    return new mongoose.Types.Decimal128(formatprice.toFixed(2)); // Devuelve Decimal128
+}
+

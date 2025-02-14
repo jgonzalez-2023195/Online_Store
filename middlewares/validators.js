@@ -1,6 +1,14 @@
 import { body } from "express-validator"
 import { validateErros } from './validate.errors.js'
-import { comonPasswords, existCategory, existEmail, existUserName, formatPhoneNumber, objectIdValid } from "../utils/db.validators.js"
+import {
+    comonPasswords, 
+    existCategory, 
+    existEmail, 
+    existUserName, 
+    formatPhoneNumber, 
+    formatPrice, 
+    objectIdValid 
+} from "../utils/db.validators.js"
 
 export const registerUser = [
     body('name', 'Name cannot be empty')
@@ -76,4 +84,31 @@ export const updatedCategory = [
         .notEmpty()
         .custom(objectIdValid),
     validateErros
+]
+
+export const registerProduct = [
+    body('name', 'Name cannot be empty')
+        .notEmpty()
+        .isLength({ min: 2, max: 100 }).withMessage('Name must be between 2 and 100 characters'),
+    body('description', 'Description cannot be empty')
+        .notEmpty(),
+    body('brand', 'Brand cannot be empty') // Corrección de typo
+        .notEmpty(),
+    body('SKU', 'SKU cannot be empty')
+        .notEmpty()
+        .isLength({ min: 4, max: 15 }).withMessage('SKU must be between 4 and 15 characters'),
+    body('price', 'Price cannot be empty')
+        .notEmpty()
+        .isDecimal().withMessage('Price not valid')
+        .custom(formatPrice),
+    body('stock', 'Stock cannot be empty')
+        .notEmpty()
+        .isInt({ min: 0 }),
+    body('category', 'Category cannot be empty')
+        .notEmpty()
+        .custom(objectIdValid),
+    body('status', 'Status cannot be empty') // Corrección de typo
+        .optional() // Si es opcional, no se debe llamar a notEmpty()
+        .isIn(['AVAILABLE']).withMessage(`Status must be 'AVAILABLE'`),
+    validateErros // Asegúrate de que esta función esté definida
 ]

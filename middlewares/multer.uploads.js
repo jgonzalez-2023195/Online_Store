@@ -36,3 +36,4 @@ const multerConfig = (destinationPath)=> {
 }
 
 export const uploadProfilePicture = multerConfig('../uploads/img/user')
+export const uploadProductPicture = multerConfig('../uploads/img/product')

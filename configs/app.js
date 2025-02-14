@@ -6,6 +6,7 @@ import helmet from "helmet"
 import cors from 'cors'
 import authRoutes from '../src/auth/auth.routes.js'
 import categoryRoutes from '../src/categories/categories.routes.js'
+import productRoutes from '../src/product/product.routes.js'
 import uploadProfile from '../src/user/user.routes.js'
 
 const configs = (app)=> {
@@ -18,8 +19,9 @@ const configs = (app)=> {
 
 const routes = (app)=> {
     app.use('/v1/onlinestore', authRoutes)
-    app.use('/v1/onlinestore/settings', uploadProfile)
+    app.use('/v1/onlinestore/Settings', uploadProfile)
     app.use('/v1/onlinestore/Category', categoryRoutes)
+    app.use('/v1/onlinestore/Product', productRoutes)
 }
 
 export const initServer = ()=> {

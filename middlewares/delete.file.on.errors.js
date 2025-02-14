@@ -14,7 +14,7 @@ export const deleteFileOnError = async(error, req, res, next)=>{
         return res.status(400).send(
             {
                 success: false,
-                message: 'Error registering user',
+                message: 'Error',
                 error
             }
         )

@@ -5,11 +5,19 @@ export const newCategory = async(req, res)=> {
     try {
         let data = req.body
         let category = new Category(data)
+        if (category.parentCategory) {
+            let parentCategory = await Category.findById(category.parentCategory);
+            if (parentCategory && parentCategory.status === 'INACTIVE') {
+                parentCategory.status = 'ACTIVE';
+                await parentCategory.save();
+            }
+        }
         await category.save()
         return res.status(200).send(
             {
                 succes: true,
-                message: 'Category successfully added'
+                message: 'Category successfully added',
+                category
             }
         )
     } catch (e) {
@@ -17,7 +25,7 @@ export const newCategory = async(req, res)=> {
         res.status(500).send(
             {
                 succes: false,
-                message: 'Internal server error',
+                message: 'General error when adding category',
                 e
             }
         )
@@ -34,7 +42,7 @@ export const listCategory = async( req, res ) =>{
             }
         )
         // .populate('parentCategory', 'name description')
-        if(category.length === 0) return res.status(404).send({message: 'There are no categories registered in the system'})
+        if(category.length === 0) return res.status(404).send({message: 'There are not categories registered in the system'})
             return res.status(200).send({message: 'The available categories are: ', category})
     } catch (e) {
         console.error(e);
