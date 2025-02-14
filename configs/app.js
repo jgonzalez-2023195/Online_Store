@@ -8,7 +8,6 @@ import authRoutes from '../src/auth/auth.routes.js'
 import categoryRoutes from '../src/categories/categories.routes.js'
 import productRoutes from '../src/product/product.routes.js'
 import uploadProfile from '../src/user/user.routes.js'
-import wathingInventroy from '../utils/inventoryWatcher.js'
 
 const configs = (app)=> {
     app.use(express.json())
@@ -30,7 +29,6 @@ export const initServer = ()=> {
     try {
         configs(app)
         routes(app)
-        wathingInventroy()
         app.listen(process.env.PORT)
         console.log(`Server running in port: ${process.env.PORT}`);
     } catch (e) {

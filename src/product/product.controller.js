@@ -37,14 +37,38 @@ export const newProduct = async(req, res)=> {
 
 export const listProduct = async(req, res)=> {
     try {
-        let product = await Product.find().populate(
+        let { id } = req.params
+        let product = await Product.findById(id).populate(
+            {
+                path: 'category',
+                select: 'name description -_id'
+            }
+        )
+        if(!product) return res.status(404).send({message: 'There are not products registered in the system'})
+            return res.status(200).send({message: 'The available products are: ', product})
+    } catch (e) {
+        console.error(e);
+        return res.status(500).send(
+            {
+                succes: false,
+                message: 'General error when list product',
+                e
+            }
+        )
+    }
+}
+
+export const listProducts = async(req, res)=> {
+    const {limit, skip} = req.query
+    try {
+        let product = await Product.find().skip(skip).limit(limit).populate(
             {
                 path: 'category',
                 select: 'name description -_id'
             }
         )
         if(product.length === 0) return res.status(404).send({message: 'There are not products registered in the system'})
-            return res.status(200).send({message: 'The available products are: ', product})
+            return res.status(200).send({message: 'The available products are: ',total: product.length , product})
     } catch (e) {
         console.error(e);
         return res.status(500).send(
@@ -82,6 +106,35 @@ export const updatedProduct = async(req, res)=> {
             {
                 succes: true,
                 message: 'Produc updated: ',
+                product
+            }
+        )
+    } catch (e) {
+        console.error(e);
+        return res.status(500).send(
+            {
+                succes: false,
+                message: 'General error when updated product',
+                e
+            }
+        )
+    }
+}
+
+export const deletedProduct = async(req, res)=> {
+    try {
+        let id = req.params.id
+        let product = await Product.findByIdAndDelete(id)
+        if(!product) return res.status(404).send(
+            {
+                succes: false,
+                message: 'Product not foun, product not deleted'
+            }
+        )
+        return res.status(200).send(
+            {
+                succes: true,
+                message: 'Product deleted to system',
                 product
             }
         )

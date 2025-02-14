@@ -1,6 +1,8 @@
 import { Router } from "express"
 import {
+    deletedProduct,
     listProduct,
+    listProducts,
     newProduct,
     updatedProduct
 } from './product.controller.js'
@@ -32,6 +34,15 @@ api.get(
         validateTokenJWT,
         isAdmin
     ],
+    listProducts
+)
+
+api.get(
+    '/list/:id',
+    [
+        validateTokenJWT,
+        isAdmin
+    ],
     listProduct
 )
 
@@ -45,6 +56,15 @@ api.put(
         deleteFileOnError
     ],
     updatedProduct
+)
+
+api.delete(
+    '/delete/:id',
+    [
+        validateTokenJWT,
+        isAdmin
+    ],
+    deletedProduct
 )
 
 export default api

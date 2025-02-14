@@ -34,9 +34,9 @@ const userSchema = Schema(
         },
         role: {
             type: String,
-            required: [true, 'Role is required'],
             upperCase: true,
-            enum: ['ADMIN', 'CLIENT']
+            enum: ['ADMIN', 'CLIENT'],
+            default: 'CLIENT'
         },
         profilePicture: {
             type: String

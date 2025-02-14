@@ -41,6 +41,43 @@ export const registerUser = [
     body('mobilePhone', 'Mobile phone cannot be empty')
         .notEmpty()
         .custom(formatPhoneNumber),
+    body('role')
+        .optional()
+        .isIn(['CLIENT']).withMessage(`Role must be 'CLIENT'`),
+    validateErros
+]
+
+export const registerUserAdmin = [
+    body('name', 'Name cannot be empty')
+        .notEmpty()
+        .isLength({ max: 30 }).withMessage(`Can't be more than 30 characters`),
+    body('surname', 'Surname cannot be empty')
+        .notEmpty()
+        .isLength({ max: 30 }).withMessage(`Can't be more than 30 characters`),
+    body('username', 'Username cannot be empty')
+        .notEmpty()
+        .isLength({ min: 4, max: 10 }).withMessage(`Username must be between 4 and 10 characters`)
+        .custom(existUserName),
+    body('email', 'Email cannot be empty')
+        .notEmpty()
+        .isEmail().withMessage('Enter a valid Email')
+        .custom(existEmail),
+    body('password', 'Password cannot be empty')
+        .notEmpty()
+        .isStrongPassword(
+            {
+                minLength: 8,
+                minLowercase: 1,
+                minNumbers: 1,
+                minSymbols: 1,
+                minUppercase: 1
+            }
+        )
+        .isLength({ min: 8 }).withMessage(`The password must be at least 8 characters long`)
+        .custom(comonPasswords),
+    body('mobilePhone', 'Mobile phone cannot be empty')
+        .notEmpty()
+        .custom(formatPhoneNumber),
     body('role', 'Role cannot be empty')
         .optional()
         .notEmpty()
@@ -146,3 +183,75 @@ export const updateProduct = [
         .isIn(['AVAILABLE']).withMessage(`Status must be 'AVAILABLE'`),
     validateErros 
 ]
+
+/* 
+import Product from '../src/product/product.model.js';
+
+const updateProductStatusOnStockChange = async (next) => {
+    // Verificamos si el stock fue actualizado
+    if (this.isModified('stock')) {
+        const newStatus = this.stock > 0 ? 'AVAILABLE' : 'NOT_AVAILABLE';
+        
+        // Actualizamos el campo `status` basado en el `stock`
+        this.status = newStatus;
+
+        console.log(`Estado del producto actualizado a: ${newStatus}`);
+    }
+
+    next(); // Continuamos con el proceso de actualización
+};
+
+// Middleware pre para `findOneAndUpdate` y `updateOne`
+Product.schema.pre('findOneAndUpdate', updateProductStatusOnStockChange);
+Product.schema.pre('updateOne', updateProductStatusOnStockChange);
+
+// Si estás utilizando `save()` directamente:
+Product.schema.pre('save', async function (next) {
+    if (this.isModified('stock')) {
+        const newStatus = this.stock > 0 ? 'AVAILABLE' : 'NOT_AVAILABLE';
+        this.status = newStatus;
+        
+        console.log(`Estado del producto actualizado a: ${newStatus}`);
+    }
+
+    next(); // Continuamos con el proceso de guardado
+});
+
+export default Product;
+
+
+
+
+
+import Product from '../src/product/product.model.js';
+
+// Función para realizar una compra (restar stock)
+const purchaseProduct = async (productId, quantity) => {
+    try {
+        // Buscar el producto
+        const product = await Product.findById(productId);
+        if (!product) {
+            throw new Error('Producto no encontrado');
+        }
+
+        // Verificar si hay suficiente stock
+        if (product.stock < quantity) {
+            throw new Error('Stock insuficiente');
+        }
+
+        // Restar la cantidad al stock
+        product.stock -= quantity;
+
+        // El producto se guarda automáticamente, y el middleware se encargará de actualizar el estado
+        await product.save();
+
+        console.log(`Compra realizada. Nuevo stock: ${product.stock}, Estado: ${product.status}`);
+
+        return product;
+    } catch (error) {
+        console.error('Error en la compra:', error);
+        throw error;
+    }
+};
+
+*/
