@@ -85,14 +85,12 @@ export const deleteCategory = async( req, res )=> {
             return res.status(400).send({ message: 'The category has no parent category to assign to products' });
         }
 
-        // Buscar los productos asociados a esta categoría
         let productsToUpdate = await Product.find({ category: id });
 
         if (productsToUpdate.length > 0) {
-            // Actualizar esos productos para que apunten a la categoría padre (parentCategory)
             await Product.updateMany(
-                { category: id }, // Productos que tienen la categoría a eliminar
-                { $set: { category: parentCategory } } // Asignarles la categoría padre
+                { category: id },
+                { $set: { category: parentCategory } }
             );
         }
         let deleteCategory = await Category.findByIdAndDelete(id)
