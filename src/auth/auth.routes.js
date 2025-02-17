@@ -20,8 +20,8 @@ api.post(
 api.post(
     '/register/admin', 
     [
-        validateTokenJWT,
-        isAdmin,
+        validateTokenJWT, //Quitar si no hay un ADMIN registrado en la BD
+        isAdmin, //Quitar si no hay un ADMIN registrado en la BD
         uploadProfilePicture.single("profilePicture"),
         registerUserAdmin,
         deleteFileOnError
