@@ -1,10 +1,11 @@
 import { Router } from "express"
 import {
-    updateProfilePictur
+    updatUser
 } from './user.controller.js'
 import { uploadProfilePicture } from '../../middlewares/multer.uploads.js'
 import { deleteFileOnError } from '../../middlewares/delete.file.on.errors.js'
-import { validateTokenJWT } from "../../middlewares/validate.jwt.js"
+import { isAdmin, validateTokenJWT } from "../../middlewares/validate.jwt.js"
+import { updateUserAdmin } from "../../middlewares/validators.js"
 
 const api = Router()
 
@@ -12,10 +13,12 @@ api.put(
     '/update/profilePicture/:id',
     [
         validateTokenJWT,
-        uploadProfilePicture.single("profilePicture"),
+        isAdmin,
+        updateUserAdmin,
+        uploadProfilePicture.single('profilePicture'),
         deleteFileOnError
     ],
-    updateProfilePictur
+    updatUser
 )
 
 export default api
