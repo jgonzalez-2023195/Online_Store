@@ -226,12 +226,19 @@ export const cart = [
     body("products.*.product")
         .exists()
         .withMessage("Product ID is required")
-        .custom(objectIdValid)
-        .withMessage("Product ID must be a valid MongoDB ObjectId"),
+        .custom(objectIdValid),
     body("products.*.quantity")
         .exists()
         .withMessage("Quantity is required")
         .isInt({ min: 1 })
         .withMessage("Quantity must be an integer greater than or equal to 1"),
+    validateErros,
+]
+
+export const deletedProductCart = [
+    body("products.*.product")
+        .exists()
+        .withMessage("Product ID is required")
+        .custom(objectIdValid),
     validateErros,
 ]

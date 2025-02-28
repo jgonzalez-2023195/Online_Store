@@ -45,21 +45,22 @@ export const addCart = async(req, res)=> {
             // Si el carrito existe, actualizar productos
             const itemIndex = cart.products.findIndex(
               (item) => item.product.toString() === product
-            );
+            )
             if (itemIndex > -1) {
               // Si el producto ya está, sumar la cantidad
-              cart.products[itemIndex].quantity += quantity;
+              cart.products[itemIndex].quantity = Number(cart.products[itemIndex].quantity) + Number(quantity)
             } else {
               // Si no está, agregarlo
-              cart.products.push({ product, quantity: Number(quantity) });
+              cart.products.push({ product, quantity: Number(quantity) })
             }
             // Recalcular totalPrice
-            const populatedCart = await cart.populate('products.product');
+            const populatedCart = await cart.populate('products.product')
             cart.totalPrice = populatedCart.products.reduce(
                 (total, item) => total + Number(item.product.price) * item.quantity,
                 0
-            );
-          }
+            )
+        }
+
         await cart.save()
         return res.status(200).send(
             {
@@ -72,7 +73,68 @@ export const addCart = async(req, res)=> {
         return res.status(500).send(
             {
                 success: false,
-                message: 'General error with add CART',
+                message: 'General error with added product to CART',
+                e
+            }
+        )
+    }
+}
+
+export const removeCart = async(req, res)=> {
+    const {product} = req.body
+    try {
+        let cart = await Cart.findOne({ userCart: req.user.uid })
+        if (!cart) {
+            return res.status(404).send(
+                {
+                    success: false,
+                    message: 'Cart not found'
+                }
+            )
+        }
+
+        // Encontrar el índice del producto en el array de products
+        const itemIndex = cart.products.findIndex(
+            (item) => item.product.toString() === product
+        )
+
+        if (itemIndex === -1) {
+            return res.status(404).send(
+                {
+                    success: false,
+                    message: 'Product not found in cart'
+                }
+            )
+        }
+        cart.products.splice(itemIndex, 1)
+
+        if(cart.products.length === 0){
+            await Cart.deleteOne({ userCart: req.user.uid })
+            return res.send(200).send(
+                {
+                    success: true,
+                    message: 'Product removed to cart and cart deleted'
+                }
+            )
+        }
+        const populatedCart = await cart.populate('products.product')
+            cart.totalPrice = populatedCart.products.reduce(
+                (total, item) => total + Number(item.product.price) * item.quantity,
+                0
+            )
+        await cart.save()
+        return res.status(200).send(
+            {
+                success: true,
+                message: 'Products deleted to cart'
+            }
+        )
+    } catch (e) {
+        console.error(e);
+        return res.status(500).send(
+            {
+                success: false,
+                message: 'General error with deleted product to CART',
                 e
             }
         )
