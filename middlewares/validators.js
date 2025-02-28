@@ -221,3 +221,17 @@ export const updateProduct = [
         .isIn(['AVAILABLE']).withMessage(`Status must be 'AVAILABLE'`),
     validateErros 
 ]
+
+export const cart = [
+    body("products.*.product")
+        .exists()
+        .withMessage("Product ID is required")
+        .custom(objectIdValid)
+        .withMessage("Product ID must be a valid MongoDB ObjectId"),
+    body("products.*.quantity")
+        .exists()
+        .withMessage("Quantity is required")
+        .isInt({ min: 1 })
+        .withMessage("Quantity must be an integer greater than or equal to 1"),
+    validateErros,
+]

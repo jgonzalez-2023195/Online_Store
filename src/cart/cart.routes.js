@@ -1,34 +1,19 @@
-import { Schema, model } from "mongoose"
+import { Router } from "express"
+import { addCart } from './cart.controller.js'
+import { validateTokenJWT } from '../../middlewares/validate.jwt.js'
+import { isClient } from "../../middlewares/validate.jwt.js"
+import { cart } from "../../middlewares/validators.js"
 
-const cartSchema = Schema(
-    {
-        userCart: {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
-            required: [true, 'User is required']
-        },
-        products: [
-            {
-                product: {
-                    type: Schema.Types.ObjectId,
-                    ref: 'Product',
-                    required: [true, 'Product is required']
-                },
-                quantity: {
-                    type: Number,
-                    required: [true, 'Quantity is requried']
-                }
-            }
-        ],
-        totalPrice: {
-            type: Schema.Types.Decimal128,
-            required: [ture, 'Total Price is required']
-        }
-    },
-    {
-        versionKey: false,
-        timestamps: true
-    }
+const api = Router()
+
+api.post(
+    '/added',
+    [
+        validateTokenJWT,
+        isClient,
+        cart
+    ],
+    addCart
 )
 
-export default model('Cart', cartSchema)
+export default api

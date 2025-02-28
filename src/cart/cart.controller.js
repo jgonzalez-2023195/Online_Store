@@ -18,30 +18,48 @@ export const addCart = async(req, res)=> {
             }
         )
         //producto
-        const products = await Product.findById(product)
-        if(!products) return res.status(404).send(
+        const productData = await Product.findById(product)
+        if(!productData) return res.status(404).send(
             {
                 success: false,
                 message: 'Product not found'
             }
         )
-        if(products.stock < quantity) return res.status(423).send(
+        if(productData.stock < quantity) return res.status(423).send(
             {
                 success: false,
-                message: `Insufficient stock for ${products.name}. Available: ${products.stock}`
+                message: `Insufficient stock for ${productData.name}. Available: ${productData.stock}`
             }
         )
         //validar si ya existe el carrtio: 
-        const cart = await Cart.findOne({userCart: req.user.uid})
+        let cart = await Cart.findOne({userCart: req.user.uid})
         if(!cart){
             cart = new Cart(
                 {
                     userCart: req.user.uid, 
                     products: [{product: product, quantity}],
-                    totalPrice: products.price * quantity
+                    totalPrice: (Number(productData.price) * quantity).toString()
                 }
             )
-        }
+        } else {
+            // Si el carrito existe, actualizar productos
+            const itemIndex = cart.products.findIndex(
+              (item) => item.product.toString() === product
+            );
+            if (itemIndex > -1) {
+              // Si el producto ya está, sumar la cantidad
+              cart.products[itemIndex].quantity += quantity;
+            } else {
+              // Si no está, agregarlo
+              cart.products.push({ product, quantity: Number(quantity) });
+            }
+            // Recalcular totalPrice
+            const populatedCart = await cart.populate('products.product');
+            cart.totalPrice = populatedCart.products.reduce(
+                (total, item) => total + Number(item.product.price) * item.quantity,
+                0
+            );
+          }
         await cart.save()
         return res.status(200).send(
             {
@@ -50,6 +68,13 @@ export const addCart = async(req, res)=> {
             }
         )
     } catch (e) {
-        
+        console.error(e);
+        return res.status(500).send(
+            {
+                success: false,
+                message: 'General error with add CART',
+                e
+            }
+        )
     }
 }

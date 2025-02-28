@@ -71,3 +71,24 @@ export const isAdmin = async(req, res, next)=> {
         )
     }
 }
+
+export const isClient = async(req, res, next)=> {
+    try {
+        const { user } = req
+        if(!user  || user.role != 'CLIENT') return res.status(403).send(
+            {
+                succes: false,
+                message: `You dont have acces | username ${user.username}, is not an CLIENT`
+            }
+        )
+        next()
+    } catch (e) {
+        console.error(e);
+        return res.status(403).send(
+            {
+                success: false,
+                message: 'Error with authorization'
+            }
+        )
+    }
+}
