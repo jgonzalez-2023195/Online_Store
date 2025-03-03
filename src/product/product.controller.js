@@ -4,7 +4,7 @@ import Category from '../categories/categories.model.js'
 export const newProduct = async(req, res)=> {
     const data = req.body
     if (data.price) {
-        data.price = parseFloat(data.price).toFixed(2);  // Asegura que el precio tenga 2 decimales
+        data.price = parseFloat(data.price).toFixed(2); 
     }
     try {
         let product = new Product(data)

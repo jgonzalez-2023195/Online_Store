@@ -242,3 +242,50 @@ export const deletedProductCart = [
         .custom(objectIdValid),
     validateErros,
 ]
+
+export const registerOrder = [
+    body('products.*.product', 'Product cannot be empty')
+        .optional()
+        .exists()
+        .notEmpty()
+        .custom(objectIdValid),
+    body('products.*.quantity', 'Quantity cannot be empty')
+        .optional()
+        .exists()
+        .notEmpty()
+        .isInt({ min: 1 }),
+    body('cart', 'Cart cannot be empty')
+        .optional()
+        .notEmpty()
+        .custom(objectIdValid),
+    body('address', 'Address is required')
+        .notEmpty()
+        .isLength({ min: 15, max: 100 }).withMessage('Address must be between 15 and 100 characters'),
+    body('deliveryMethod', 'Delivery Method cannot be empty')
+        .notEmpty()
+        .isIn(['HOME', 'PICKUP']).withMessage(`Delivery Method must be 'HOME' or 'PICKUP'`),
+    body('statusOrder', 'Status Order cannot be empty')
+        .notEmpty()
+        .isIn(['CANCELED', 'PENDING', 'SHIPPED', 'DELIVERED']).withMessage(`Status Order must be 'CANCELED', 'PENDING', 'SHIPPED' or 'DELIVERED'`),
+    body('paymentMethod.*.typePayment', 'Type Payment cannot be empty')
+        .notEmpty()
+        .isIn(['CARD', 'APP', 'BANK', 'POINTS']).withMessage(`Type Payment must be 'CARD', 'APP', 'BANK' or 'POINTS'`),
+    body('paymentMethod.*.details.*.cardType', 'Card Type cannot be empty')
+        .if(body('paymentMethod.*.typePayment').equals('CARD'))
+        .optional()
+        .notEmpty()
+        .isIn(['DEBIT', 'CREDIT']).withMessage(`Card Type must be 'DEBIT' or 'CREDIT'`),
+    body('paymentMethod.*.details.*.cardNumber', 'Card Number cannot be empty')
+        .if(body('paymentMethod.*.typePayment').equals('CARD'))
+        .optional()
+        .notEmpty()
+        .isCreditCard().withMessage('Card Number not valid'),
+    body('paymentMethod.*.details.*.appName', 'App Name cannot be empty')
+        .if(body('paymentMethod.*.typePayment').equals('APP'))
+        .optional()
+        .notEmpty(),
+    body('pointUsed', 'Point Used cannot be empty')
+        .optional()
+        .isInt({ min: 0 }),
+    validateErros
+]
