@@ -25,7 +25,7 @@ const orderSchema = Schema(
             ref: 'Cart',
             default: null
         },
-        address: {
+        addres: {
             type: String,
             required: [true, 'Address is necesary']
         },
@@ -42,40 +42,42 @@ const orderSchema = Schema(
             enum: ['CANCELED', 'PENDING', 'SHIPPED', 'DELIVERED'],
             default: 'PENDING'
         },
-        paymentMethod: {
-            typePayment: {
-                type: String,
-                enum: ['CARD', 'APP', 'BANK', 'POINTS'],
-                required: [true, 'Payment Method is required']
-            },
-            details: {
-                cardType: {
+        paymentMethod: [
+            {
+                typePayment: {
                     type: String,
-                    enum: ['DEBIT', 'CREDIT'],
-                    required: function () {
-                        return this.typePayment === 'CARD'
-                    }
+                    enum: ['CARD', 'APP', 'BANK', 'POINTS'],
+                    required: [true, 'Payment Method is required']
                 },
-                cardNumber: {
-                    type: String,
-                    required: function () {
-                        return this.typePayment === 'CARD'
-                    }
-                },
-                appName: {
-                    type: String,
-                    required: function () {
-                        return this.typePayment === 'APP'
-                    }
-                },
-                pointUsed: {
-                    type: Number,
-                    required: function() {
-                        return this.typePayment === 'POINTS'
+                details: {
+                    cardType: {
+                        type: String,
+                        enum: ['DEBIT', 'CREDIT'],
+                        required: function () {
+                            return this.typePayment === 'CARD'
+                        }
+                    },
+                    cardNumber: {
+                        type: String,
+                        required: function () {
+                            return this.typePayment === 'CARD'
+                        }
+                    },
+                    appName: {
+                        type: String,
+                        required: function () {
+                            return this.typePayment === 'APP'
+                        }
+                    },
+                    pointUsed: {
+                        type: Number,
+                        required: function() {
+                            return this.typePayment === 'POINTS'
+                        }
                     }
                 }
             }
-        }
+        ]
     },
     {
         versionKey: false,

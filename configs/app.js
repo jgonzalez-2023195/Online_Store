@@ -9,6 +9,7 @@ import categoryRoutes from '../src/categories/categories.routes.js'
 import productRoutes from '../src/product/product.routes.js'
 import uploadProfile from '../src/user/user.routes.js'
 import cart from '../src/cart/cart.routes.js'
+import order from '../src/order/order.routes.js'
 
 const configs = (app)=> {
     app.use(express.json())
@@ -24,6 +25,7 @@ const routes = (app)=> {
     app.use('/v1/onlinestore/Category', categoryRoutes)
     app.use('/v1/onlinestore/Product', productRoutes)
     app.use('/v1/onlinestore/Cart', cart)
+    app.use('/v1/onlinestore/Order', order)
 }
 
 export const initServer = ()=> {
