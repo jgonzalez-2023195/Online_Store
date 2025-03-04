@@ -1,0 +1,1331 @@
+{
+	"info": {
+		"_postman_id": "11297150-a7f3-454e-a36f-985955a296f6",
+		"name": "OnlineStore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37956953"
+	},
+	"item": [
+		{
+			"name": "ADMINactions",
+			"item": [
+				{
+					"name": "Category",
+					"item": [
+						{
+							"name": "NewCategory",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Audio",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Categoria encargada del manejo de Audio para el hogar e industria",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:4002/v1/onlinestore/Category/new",
+									"host": [
+										"localhost"
+									],
+									"port": "4002",
+									"path": [
+										"v1",
+										"onlinestore",
+										"Category",
+										"new"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "NewSubCategory",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Audifonos",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Categoria encargada de los accesorios para Audifonos",
+											"type": "text"
+										},
+										{
+											"key": "parentCategory",
+											"value": "67c60f2d22b1a6de4d0e7e99",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:4002/v1/onlinestore/Category/new",
+									"host": [
+										"localhost"
+									],
+									"port": "4002",
+									"path": [
+										"v1",
+										"onlinestore",
+										"Category",
+										"new"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "NewSubSubCategory",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Audifonos Bluetooth",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Categoria encargada del manejo de la venta de Audifonos Bluetooth",
+											"type": "text"
+										},
+										{
+											"key": "parentCategory",
+											"value": "67c60f4f22b1a6de4d0e7e9e",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:4002/v1/onlinestore/Category/new",
+									"host": [
+										"localhost"
+									],
+									"port": "4002",
+									"path": [
+										"v1",
+										"onlinestore",
+										"Category",
+										"new"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ListCategory",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:4002/v1/onlinestore/Category/list?skip=0",
+									"host": [
+										"localhost"
+									],
+									"port": "4002",
+									"path": [
+										"v1",
+										"onlinestore",
+										"Category",
+										"list"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "3",
+											"disabled": true
+										},
+										{
+											"key": "skip",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "updateCategory",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "name",
+											"value": "Electrónico",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Categoria encargada del manejo de electónicos para el hogar e industria",
+											"type": "text"
+										},
+										{
+											"key": "status",
+											"value": "ACTIVE",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:4002/v1/onlinestore/Category/update/67ae44859f6faf46409f906e",
+									"host": [
+										"localhost"
+									],
+									"port": "4002",
+									"path": [
+										"v1",
+										"onlinestore",
+										"Category",
+										"update",
+										"67ae44859f6faf46409f906e"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteCategory",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:4002/v1/onlinestore/Category/delete/67af94177055be55c9442a15",
+									"host": [
+										"localhost"
+									],
+									"port": "4002",
+									"path": [
+										"v1",
+										"onlinestore",
+										"Category",
+										"delete",
+										"67af94177055be55c9442a15"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Product",
+					"item": [
+						{
+							"name": "NewProductComputadoras",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Laptop HP Victus 15-fa0000la de 15.6\" FHD, Core i5-12450H, 16GB RAM, 512GB SSD, RTX3050 4GB",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Laptop HP Victus 15-fa0000la.\n\n    Pantalla de 15.6\" FHD.\n    Procesador Intel Core i5-12450H.\n    Memoria RAM 16GB.\n    Almacenamiento 512GB SSD.\n    Tajerta gráfica Nvidia GeForce RTX3050 4GB.\n    Windows 11.\n\n",
+											"type": "text"
+										},
+										{
+											"key": "brand",
+											"value": "IDEPAD",
+											"type": "text"
+										},
+										{
+											"key": "SKU",
+											"value": "80M55LA",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "8999",
+											"type": "text"
+										},
+										{
+											"key": "stock",
+											"value": "25",
+											"type": "text"
+										},
+										{
+											"key": "category",
+											"value": "67af93f77055be55c9442a08",
+											"type": "text"
+										},
+										{
+											"key": "productPicture",
+											"type": "file",
+											"src": "/C:/Users/Informatica/Downloads/HPvictus.webp"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:4002/v1/onlinestore/Product/new",
+									"host": [
+										"localhost"
+									],
+									"port": "4002",
+									"path": [
+										"v1",
+										"onlinestore",
+										"Product",
+										"new"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "NewProductAudifonosBluetooth",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Audifono Bluetooth Marca Xiaomi Modelo Buds 4 Active Color Negro",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Audífonos Bluetooth con sonido estéreo TWS y controles táctiles en cada auricular para gestión de llamadas y canciones. Reducción de ruido exterior y baja latencia.\nSu autonomía de hasta 28 horas con el estuche de carga lo convierten en la opción perfecta para el uso diario.",
+											"type": "text"
+										},
+										{
+											"key": "brand",
+											"value": "REDMI",
+											"type": "text"
+										},
+										{
+											"key": "SKU",
+											"value": "BHR6992GL",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "141",
+											"type": "text"
+										},
+										{
+											"key": "stock",
+											"value": "50",
+											"type": "text"
+										},
+										{
+											"key": "category",
+											"value": "67c60f4f22b1a6de4d0e7e9e",
+											"type": "text"
+										},
+										{
+											"key": "productPicture",
+											"type": "file",
+											"src": "postman-cloud:///1eff4d05-d16e-4090-8a40-8d5c00b767a7"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:4002/v1/onlinestore/Product/new",
+									"host": [
+										"localhost"
+									],
+									"port": "4002",
+									"path": [
+										"v1",
+										"onlinestore",
+										"Product",
+										"new"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "NewProductImpresoras",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Impresora Epson L14150 Multifuncional Inalámbrica con Impresión Duplex",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Impresora Epson L14150 Multifuncional. \n\n    A3+ impresión de formato ancho a color\n    Escáner tamaño oficio\n    ADF de 35 Hojas A4/ Carta/ Oficio\n    Impresión dúplex A4/ Carta\n    Conectividad Wi-Fi\n    Velocidad de impresión ISO: negro 17 ppm, Color 9 ppm. \n    Negro 38 ppm y color 24 ppm (borrador, A4/carta)\n    Imprime hasta 7.500 páginas en negro o 6.000 páginas en color con un kit de botellas de tinta de reemplazo\n\n",
+											"type": "text"
+										},
+										{
+											"key": "brand",
+											"value": "EPSON",
+											"type": "text"
+										},
+										{
+											"key": "SKU",
+											"value": "L14150221",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "5699",
+											"type": "text"
+										},
+										{
+											"key": "stock",
+											"value": "10",
+											"type": "text"
+										},
+										{
+											"key": "category",
+											"value": "67afa97481e7c43f3e7fcfd6",
+											"type": "text"
+										},
+										{
+											"key": "productPicture",
+											"type": "file",
+											"src": "/C:/Users/Informatica/Downloads/EPSON.webp"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:4002/v1/onlinestore/Product/new",
+									"host": [
+										"localhost"
+									],
+									"port": "4002",
+									"path": [
+										"v1",
+										"onlinestore",
+										"Product",
+										"new"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateProduct",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Impresora HP 580 Smart Tank Todo-en-Uno Inalámbrica Multifuncional de Tanque de Tinta",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "description",
+											"value": "Impresora HP 580 Smart Tank Todo-en-Uno.\n\nCopia, imprime, escanea.\n1 Hi-Speed USB 2.0 (dispositivo); 1 Bluetooth de bajo consumo de energía; 1 Wi-Fi 802.11b/g/n; 1 Wi-Fi Direct.\nImprime hasta 12000 páginas a negro.\nImprime hasta 6000 páginas a color.",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "brand",
+											"value": "HP",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "SKU",
+											"value": "HP580",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "price",
+											"value": "1699",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "stock",
+											"value": "55",
+											"type": "text"
+										},
+										{
+											"key": "category",
+											"value": "67aed267165dd9615c70a969",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "productPicture",
+											"type": "file",
+											"src": "/C:/Users/Informatica/Desktop/Online_Store/uploads/img/product/EPSON-1739560418936.webp",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:4002/v1/onlinestore/Product/update/67c00047dac186805881b55d",
+									"host": [
+										"localhost"
+									],
+									"port": "4002",
+									"path": [
+										"v1",
+										"onlinestore",
+										"Product",
+										"update",
+										"67c00047dac186805881b55d"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ListProduct",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:4002/v1/onlinestore/Product/list?limit=3&skip=0",
+									"host": [
+										"localhost"
+									],
+									"port": "4002",
+									"path": [
+										"v1",
+										"onlinestore",
+										"Product",
+										"list"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "3"
+										},
+										{
+											"key": "skip",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "ListProductID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:4002/v1/onlinestore/Product/list/67af95247055be55c9442a1a",
+									"host": [
+										"localhost"
+									],
+									"port": "4002",
+									"path": [
+										"v1",
+										"onlinestore",
+										"Product",
+										"list",
+										"67af95247055be55c9442a1a"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeleteProduct",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "localhost:4002/v1/onlinestore/Product/delete/67afaba3cf8a7135280ccb8a",
+									"host": [
+										"localhost"
+									],
+									"port": "4002",
+									"path": [
+										"v1",
+										"onlinestore",
+										"Product",
+										"delete",
+										"67afaba3cf8a7135280ccb8a"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Orders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:4002/v1/onlinestore/Order/orders/list",
+							"host": [
+								"localhost"
+							],
+							"port": "4002",
+							"path": [
+								"v1",
+								"onlinestore",
+								"Order",
+								"orders",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Settings",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "role",
+									"value": "ADMIN",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4002/v1/onlinestore/Settings/update/67c69387658f24c74a03d258",
+							"host": [
+								"localhost"
+							],
+							"port": "4002",
+							"path": [
+								"v1",
+								"onlinestore",
+								"Settings",
+								"update",
+								"67c69387658f24c74a03d258"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CLIENTactions",
+			"item": [
+				{
+					"name": "CART",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "product",
+									"value": "67c00047dac186805881b55d",
+									"type": "text"
+								},
+								{
+									"key": "quantity",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4002/v1/onlinestore/Cart/added",
+							"host": [
+								"localhost"
+							],
+							"port": "4002",
+							"path": [
+								"v1",
+								"onlinestore",
+								"Cart",
+								"added"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateCART",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "product",
+									"value": "67c00047dac186805881b55d",
+									"type": "text"
+								},
+								{
+									"key": "quantity",
+									"value": "20",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4002/v1/onlinestore/Cart/removed",
+							"host": [
+								"localhost"
+							],
+							"port": "4002",
+							"path": [
+								"v1",
+								"onlinestore",
+								"Cart",
+								"removed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "product",
+									"value": "67c00047dac186805881b55d",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "quantity",
+									"value": "10",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "addres",
+									"value": "6 avenida 13-54 zona 7, Colonia Landívar, 01007 Ciudad de Guatemala, Guatemala, C.A.",
+									"type": "text"
+								},
+								{
+									"key": "deliveryMethod",
+									"value": "HOME",
+									"type": "text"
+								},
+								{
+									"key": "statusOrder",
+									"value": "SHIPPED",
+									"type": "text"
+								},
+								{
+									"key": "cart",
+									"value": "67c67c18a8e22d44ce80f89d",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4002/v1/onlinestore/Order/new",
+							"host": [
+								"localhost"
+							],
+							"port": "4002",
+							"path": [
+								"v1",
+								"onlinestore",
+								"Order",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Order",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:4002/v1/onlinestore/Order/list",
+							"host": [
+								"localhost"
+							],
+							"port": "4002",
+							"path": [
+								"v1",
+								"onlinestore",
+								"Order",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateOrder",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "newQuantity",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4002/v1/onlinestore/Order/update/67c68ad1660f3040601e9b43",
+							"host": [
+								"localhost"
+							],
+							"port": "4002",
+							"path": [
+								"v1",
+								"onlinestore",
+								"Order",
+								"update",
+								"67c68ad1660f3040601e9b43"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Settings",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "CHEPE",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:4002/v1/onlinestore/Settings/update/67c157adbb02877cf3c98cc8",
+							"host": [
+								"localhost"
+							],
+							"port": "4002",
+							"path": [
+								"v1",
+								"onlinestore",
+								"Settings",
+								"update",
+								"67c157adbb02877cf3c98cc8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ListProduct Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4002/v1/onlinestore/Product/list/public",
+					"host": [
+						"localhost"
+					],
+					"port": "4002",
+					"path": [
+						"v1",
+						"onlinestore",
+						"Product",
+						"list",
+						"public"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "3",
+							"disabled": true
+						},
+						{
+							"key": "skip",
+							"value": "0",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RegiterClient",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "José",
+							"type": "text"
+						},
+						{
+							"key": "surname",
+							"value": "González",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "jgonzalez2",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "jgonzalez.1@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Pa$sword12",
+							"type": "text"
+						},
+						{
+							"key": "mobilePhone",
+							"value": "+502 4137-9293",
+							"type": "text"
+						},
+						{
+							"key": "role",
+							"value": "CLIENT",
+							"type": "text"
+						},
+						{
+							"key": "profilePicture",
+							"type": "file",
+							"src": "postman-cloud:///1efefcbb-d41f-4270-9b72-05398edff510"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:4002/v1/onlinestore/register",
+					"host": [
+						"localhost"
+					],
+					"port": "4002",
+					"path": [
+						"v1",
+						"onlinestore",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RegiterClient Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "José",
+							"type": "text"
+						},
+						{
+							"key": "surname",
+							"value": "González",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "jgonzale",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "jgonzalez.11@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Pa$sword12",
+							"type": "text"
+						},
+						{
+							"key": "mobilePhone",
+							"value": "+502 4137-9293",
+							"type": "text"
+						},
+						{
+							"key": "role",
+							"value": "CLIENT",
+							"type": "text"
+						},
+						{
+							"key": "profilePicture",
+							"type": "file",
+							"src": "postman-cloud:///1efefcbb-d41f-4270-9b72-05398edff510"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:4002/v1/onlinestore/register",
+					"host": [
+						"localhost"
+					],
+					"port": "4002",
+					"path": [
+						"v1",
+						"onlinestore",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RegiterAdmin",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "José Francisco",
+							"type": "text"
+						},
+						{
+							"key": "surname",
+							"value": "González Ordoñez",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "jgonzalezA",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "jgonzalez-2023195@kinal.edu.gt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Pa$sword12",
+							"type": "text"
+						},
+						{
+							"key": "mobilePhone",
+							"value": "+502 2023-0195",
+							"type": "text"
+						},
+						{
+							"key": "role",
+							"value": "ADMIN",
+							"type": "text"
+						},
+						{
+							"key": "profilePicture",
+							"type": "file",
+							"src": "/C:/Users/Informatica/Desktop/Online_Store/uploads/img/user/image-1739485208883.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:4002/v1/onlinestore/register/admin",
+					"host": [
+						"localhost"
+					],
+					"port": "4002",
+					"path": [
+						"v1",
+						"onlinestore",
+						"register",
+						"admin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LoginClient",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"token\", data.token)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "userLogin",
+							"value": "jgonzalez.242720@gmail.com",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "userLogin",
+							"value": "jgonzalez2",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "Pa$sword12",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:4002/v1/onlinestore/login",
+					"host": [
+						"localhost"
+					],
+					"port": "4002",
+					"path": [
+						"v1",
+						"onlinestore",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LoginAdmin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"token\", data.token)"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "userLogin",
+							"value": "jgonzalezA",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "userLogin",
+							"value": "jgonzalez-2023195@kinal.edu.gt",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "MyAdminAce$25",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:4002/v1/onlinestore/login",
+					"host": [
+						"localhost"
+					],
+					"port": "4002",
+					"path": [
+						"v1",
+						"onlinestore",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
