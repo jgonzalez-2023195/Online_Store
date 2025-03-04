@@ -25,7 +25,7 @@ const orderSchema = Schema(
             ref: 'Cart',
             default: null
         },
-        address: {
+        addres: {
             type: String,
             required: [true, 'Address is necesary']
         },
@@ -76,7 +76,7 @@ const orderSchema = Schema(
                         }
                     }
                 }
-            },
+            }
         ]
     },
     {

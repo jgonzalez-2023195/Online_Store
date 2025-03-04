@@ -2,9 +2,10 @@ import Order from './order.model.js'
 import Cart from '../cart/cart.model.js'
 import Product from '../product/product.model.js'
 import User from '../user/user.model.js'
+import { cart } from '../../middlewares/validators.js'
 
 export const newOrder = async(req, res) => {
-    const {product, quantity, typePayment, details, cardType, carNumber, appName, pointUsed, ...data} = req.body
+    const {product, quantity, typePayment, details, cardType, cardNumber, appName, pointUsed, ...data} = req.body
     try {
         const user = await User.findOne(
             {
@@ -13,22 +14,18 @@ export const newOrder = async(req, res) => {
         )
         
         if(!user) return res.status(404).send(
+        if(!user) return res.status(404).send(
             {
                 success: false,
                 message: 'User not found'
             }
         )
 
-        let orderProduct = []
-        let totalPrice = 0
-        console.log(data.address);
-        console.log('Body Completo:', req.body);
-console.log('Address:', req.body.address);
-
-        
+        let orderProducts = []
         if(data.cart){
             //Verificar carrito
             const cartData = await Cart.findById(data.cart)
+            const productDataCart = await Product.findById(cartData.product)
             if(!cartData) return res.status(404).send(
                 {
                     success: false,
@@ -50,14 +47,25 @@ console.log('Address:', req.body.address);
                         message: `Insufficient stock for ${productData.name}. Available: ${productData.stock}`
                     }
                 )
-                orderProduct.push(
+                orderProducts.push(
                     {
                         product: productData._id,
                         quantity: item.quantity
                     }
                 )
             }
-            totalPrice = cartData.totalPrice
+            // let newStock = productData.stock - cartData.quantity
+            console.log(productDataCart);
+            console.log(cartData.quantity); 
+            
+            data.totalPrice = cartData.totalPrice
+            // await Product.findByIdAndUpdate(product, newStock)
+            await Cart.findByIdAndUpdate(data.cart,
+                {
+                    products: [],
+                    totalPrice: '0',
+                }
+            )
         } else {
             const productData = await Product.findById(product)
             if(!productData) return res.status(404).send(
@@ -72,20 +80,18 @@ console.log('Address:', req.body.address);
                     message: `Insufficient stock for ${productData.name}. Available: ${productData.stock}`
                 }
             )
-            orderProduct.push(
+            orderProducts.push(
                 {
                     product: productData._id,
-                    quantity,
+                    quantity
                 }
             )
-            totalPrice = (Number(productData.price) * quantity).toString();
+            data.totalPrice = (Number(productData.price) * quantity).toString();
         }
-        const newOrder = new Order(
-            {
-                client: req.user.uid,
-                data
-            }
-        )
+        data.client = req.user.uid
+        data.products = orderProducts
+        
+        const newOrder = new Order(data)
         await newOrder.save()
         return res.status(201).send(
             {
@@ -94,6 +100,7 @@ console.log('Address:', req.body.address);
                 newOrder
             }
         )
+
     } catch (e) {
         console.error(e);
         return res.status(500).send(
