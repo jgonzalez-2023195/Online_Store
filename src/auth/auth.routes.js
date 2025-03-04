@@ -28,6 +28,7 @@ api.post(
     ],
     register
 )
+
 api.post('/login', login)
 
 export default api

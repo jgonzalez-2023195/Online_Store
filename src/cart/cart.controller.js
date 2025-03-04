@@ -25,7 +25,7 @@ export const addCart = async(req, res)=> {
                 message: 'Product not found'
             }
         )
-        if(productData.stock < quantity) return res.status(423).send(
+        if(productData.stock < quantity) return res.status(400).send(//arreglar para que si duplico la cantidad y el stock con la primera cantidad ya ha llegado a su stock maximo que diga que ya no se puede comprar
             {
                 success: false,
                 message: `Insufficient stock for ${productData.name}. Available: ${productData.stock}`
@@ -44,14 +44,14 @@ export const addCart = async(req, res)=> {
         } else {
             // Si el carrito existe, actualizar productos
             const itemIndex = cart.products.findIndex(
-              (item) => item.product.toString() === product
+                (item) => item.product.toString() === product
             )
             if (itemIndex > -1) {
               // Si el producto ya está, sumar la cantidad
-              cart.products[itemIndex].quantity = Number(cart.products[itemIndex].quantity) + Number(quantity)
+                cart.products[itemIndex].quantity = Number(cart.products[itemIndex].quantity) + Number(quantity)
             } else {
               // Si no está, agregarlo
-              cart.products.push({ product, quantity: Number(quantity) })
+                cart.products.push({ product, quantity: Number(quantity) })
             }
             // Recalcular totalPrice
             const populatedCart = await cart.populate('products.product')
@@ -110,7 +110,7 @@ export const removeCart = async(req, res)=> {
 
         if(cart.products.length === 0){
             await Cart.deleteOne({ userCart: req.user.uid })
-            return res.send(200).send(
+            return res.status(200).send(
                 {
                     success: true,
                     message: 'Product removed to cart and cart deleted'

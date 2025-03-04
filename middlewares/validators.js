@@ -87,16 +87,49 @@ export const registerUserAdmin = [
 
 export const updateUserAdmin = [
     body('name', 'Name cannot be empty')
+        .optional()
         .notEmpty()
         .isLength({ max: 30 }).withMessage(`Can't be more than 30 characters`),
     body('surname', 'Surname cannot be empty')
+        .optional()
         .notEmpty()
         .isLength({ max: 30 }).withMessage(`Can't be more than 30 characters`),
     body('username', 'Username cannot be empty')
+        .optional()
         .notEmpty()
         .isLength({ min: 4, max: 10 }).withMessage(`Username must be between 4 and 10 characters`)
         .custom(existUserName),
     body('email', 'Email cannot be empty')
+        .optional()
+        .notEmpty()
+        .isEmail().withMessage('Enter a valid Email')
+        .custom(existEmail),
+    body('mobilePhone', 'Mobile phone cannot be empty')
+        .optional()
+        .notEmpty()
+        .custom(formatPhoneNumber),
+    body('role', 'Role cannot be empty')
+        .optional()
+        .notEmpty()
+        .isIn(['ADMIN', 'CLIENT']).withMessage(`Role must be 'ADMIN' or 'CLIENT'`),
+    validateErros
+]
+export const updateUserProfile = [
+    body('name', 'Name cannot be empty')
+        .optional()
+        .notEmpty()
+        .isLength({ max: 30 }).withMessage(`Can't be more than 30 characters`),
+    body('surname', 'Surname cannot be empty')
+        .optional()
+        .notEmpty()
+        .isLength({ max: 30 }).withMessage(`Can't be more than 30 characters`),
+    body('username', 'Username cannot be empty')
+        .optional()
+        .notEmpty()
+        .isLength({ min: 4, max: 10 }).withMessage(`Username must be between 4 and 10 characters`)
+        .custom(existUserName),
+    body('email', 'Email cannot be empty')
+        .optional()
         .notEmpty()
         .isEmail().withMessage('Enter a valid Email')
         .custom(existEmail),
@@ -114,12 +147,13 @@ export const updateUserAdmin = [
         .isLength({ min: 8 }).withMessage(`The password must be at least 8 characters long`)
         .custom(comonPasswords),
     body('mobilePhone', 'Mobile phone cannot be empty')
+        .optional()
         .notEmpty()
         .custom(formatPhoneNumber),
     body('role', 'Role cannot be empty')
         .optional()
         .notEmpty()
-        .isIn(['ADMIN', 'CLIENT']).withMessage(`Role must be 'ADMIN' or 'CLIENT'`),
+        .isIn(['CLIENT']).withMessage(`Role must be 'CLIENT'`),
     validateErros
 ]
 
@@ -258,7 +292,7 @@ export const registerOrder = [
         .optional()
         .notEmpty()
         .custom(objectIdValid),
-    body('address', 'Address is required')
+    body('addres', 'Address is required')
         .notEmpty()
         .isLength({ min: 15, max: 100 }).withMessage('Address must be between 15 and 100 characters'),
     body('deliveryMethod', 'Delivery Method cannot be empty')
@@ -269,23 +303,28 @@ export const registerOrder = [
         .isIn(['CANCELED', 'PENDING', 'SHIPPED', 'DELIVERED']).withMessage(`Status Order must be 'CANCELED', 'PENDING', 'SHIPPED' or 'DELIVERED'`),
     body('paymentMethod.*.typePayment', 'Type Payment cannot be empty')
         .notEmpty()
+        .exists()
         .isIn(['CARD', 'APP', 'BANK', 'POINTS']).withMessage(`Type Payment must be 'CARD', 'APP', 'BANK' or 'POINTS'`),
     body('paymentMethod.*.details.*.cardType', 'Card Type cannot be empty')
         .if(body('paymentMethod.*.typePayment').equals('CARD'))
         .optional()
+        .exists()
         .notEmpty()
         .isIn(['DEBIT', 'CREDIT']).withMessage(`Card Type must be 'DEBIT' or 'CREDIT'`),
     body('paymentMethod.*.details.*.cardNumber', 'Card Number cannot be empty')
         .if(body('paymentMethod.*.typePayment').equals('CARD'))
         .optional()
+        .exists()
         .notEmpty()
         .isCreditCard().withMessage('Card Number not valid'),
     body('paymentMethod.*.details.*.appName', 'App Name cannot be empty')
-        .if(body('paymentMethod.*.typePayment').equals('APP'))
+        .if(body('paymentMethod.typePayment').equals('APP'))
         .optional()
+        .exists()
         .notEmpty(),
-    body('pointUsed', 'Point Used cannot be empty')
+    body('paymentMethod.*.details.*.pointUsed', 'Point Used cannot be empty')
         .optional()
+        .exists()
         .isInt({ min: 0 }),
     validateErros
 ]

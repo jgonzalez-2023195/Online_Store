@@ -36,6 +36,10 @@ api.get(
     ],
     listProducts
 )
+api.get(
+    '/list/public',
+    listProducts
+)
 
 api.get(
     '/list/:id',

@@ -59,8 +59,11 @@ export const listProduct = async(req, res)=> {
 }
 
 export const listProducts = async(req, res)=> {
-    const {limit, skip} = req.query
+    const {limit, skip, name, category} = req.query
     try {
+        if(category) filter.category = category
+        if(category) filter.category = category
+
         let product = await Product.find().skip(skip).limit(limit).populate(
             {
                 path: 'category',
@@ -84,7 +87,7 @@ export const listProducts = async(req, res)=> {
 export const updatedProduct = async(req, res)=> {
     try {
         const { id } = req.params
-        const { filename } = req.file
+        const filename = req.file?.filename??null
         const data = req.body
 
         if (filename) {

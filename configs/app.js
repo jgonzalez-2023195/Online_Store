@@ -7,7 +7,7 @@ import cors from 'cors'
 import authRoutes from '../src/auth/auth.routes.js'
 import categoryRoutes from '../src/categories/categories.routes.js'
 import productRoutes from '../src/product/product.routes.js'
-import uploadProfile from '../src/user/user.routes.js'
+import updateProfile from '../src/user/user.routes.js'
 import cart from '../src/cart/cart.routes.js'
 import order from '../src/order/order.routes.js'
 
@@ -21,7 +21,7 @@ const configs = (app)=> {
 
 const routes = (app)=> {
     app.use('/v1/onlinestore', authRoutes)
-    app.use('/v1/onlinestore/Settings', uploadProfile)
+    app.use('/v1/onlinestore/Settings', updateProfile)
     app.use('/v1/onlinestore/Category', categoryRoutes)
     app.use('/v1/onlinestore/Product', productRoutes)
     app.use('/v1/onlinestore/Cart', cart)
